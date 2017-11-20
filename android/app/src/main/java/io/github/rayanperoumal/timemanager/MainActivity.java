@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
     public void startElapsing(int m, int s){
         Timer timer = new Timer();
         timer.setOnTimeListener((min, sec) -> {
-           /* runOnUiThread(()->{
+           runOnUiThread(()->{
                 updateTime(sec, min);
-            });*/
+            });
         });
         timer.elapse(m,s);
     }

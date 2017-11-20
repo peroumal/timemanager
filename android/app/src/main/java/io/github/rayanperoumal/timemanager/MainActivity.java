@@ -14,22 +14,31 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         minute = (TextView) findViewById(R.id.minute);
         second = (TextView) findViewById(R.id.second);
-
-
+        startElapsing(25,0);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Timer timer = new Timer();
-        timer.setOnTimeListener((minute, second) -> {
-            Log.i("Main:onTimeChange","second:{"+second+"}");
-        });
 
-        Log.i("Main:resume","start");
-        timer.elapse(20);
-        Log.i("Main:resume","end");
     }
 
+    public void startElapsing(int m, int s){
+        Timer timer = new Timer();
+        timer.setOnTimeListener((min, sec) -> {
+           /* runOnUiThread(()->{
+                updateTime(sec, min);
+            });*/
+        });
+        timer.elapse(m,s);
+    }
 
+    private void updateTime(long m, long s){
+        String secs = Long.toString(s);
+        String mins = Long.toString(m);
+        secs = (secs.length()<=1)?"0".concat(secs):secs;
+        mins = (mins.length()<=1)?"0".concat(mins):mins;
+        second.setText(secs);
+        minute.setText(mins);
+    }
 }

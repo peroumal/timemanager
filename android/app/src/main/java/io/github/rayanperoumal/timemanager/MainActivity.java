@@ -2,10 +2,12 @@ package io.github.rayanperoumal.timemanager;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
     TextView minute, second;
+    static Timer timer = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +24,13 @@ public class MainActivity extends Activity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
     public void startElapsing(int m, int s){
-        Timer timer = new Timer();
         timer.setOnTimeListener((min, sec) -> {
            runOnUiThread(()->{
                 updateTime(sec, min);

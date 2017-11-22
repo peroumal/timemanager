@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
     public void nextAction(){
         this.currentAction = task.next();
         actionName.setText(this.currentAction.getTitle());
-        startElapsing(this.currentAction.getDuration());
+        Time time = this.currentAction.getDuration();
+        startElapsing(time.getMinutes(),time.getSeconds());
     }
 
     @Override
@@ -48,16 +49,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-    }
-    public void startElapsing(Time t){
-        int m = (int)(t.getTime()/60);
-        int s = (int)(t.getTime()-m);
-        timer.setOnTimeListener((min, sec) -> {
-            runOnUiThread(()->{
-                updateTime(sec, min);
-            });
-        });
-        timer.elapse(m,s);
     }
 
     public void startElapsing(int m, int s){

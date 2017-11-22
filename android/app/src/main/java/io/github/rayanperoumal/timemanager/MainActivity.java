@@ -6,9 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
 
-import io.github.rayanperoumal.timemanager.task.Task;
 import io.github.rayanperoumal.timemanager.task.tasks.PomodoroTask;
 import io.github.rayanperoumal.timemanager.task.TaskAction;
+import io.github.rayanperoumal.timemanager.task.time.Time;
+import io.github.rayanperoumal.timemanager.task.time.Timer;
 
 public class MainActivity extends AppCompatActivity {
     TextView minute, second,actionName;

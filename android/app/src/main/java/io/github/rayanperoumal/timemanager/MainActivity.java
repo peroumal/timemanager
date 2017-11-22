@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     Button actionNext;
     TaskAction currentAction;
     PomodoroTask task;
-    static Timer timer = new Timer();
+    static Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startElapsing(int m, int s){
+        if(timer!=null)timer.stop();
+        timer =  new Timer();
         timer.setOnTimeListener((min, sec) -> {
            runOnUiThread(()->{
                 updateTime(sec, min);

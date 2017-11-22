@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.rayanperoumal.timemanager.Time;
 import io.github.rayanperoumal.timemanager.task.actions.FinishAction;
 import io.github.rayanperoumal.timemanager.task.actions.PrepareAction;
 
@@ -32,10 +33,10 @@ public class SimpleTask implements Task, Serializable{
     @Override
     public TaskAction next() {
         TaskAction action = new FinishAction();
-        if(actions.size()<position)action = actions.get(++position);
-        if (position>-1)
-            action.getDuration().addTime(getAction().getDuration());
-
+        Time addMoreTime = new Time(0);
+        if (position>-1 && getAction()!=null) addMoreTime = getAction().getDuration();
+        if((actions.size()-1)>position)action = actions.get(++position);
+        action.getDuration().addTime(addMoreTime);
         return action;
     }
 

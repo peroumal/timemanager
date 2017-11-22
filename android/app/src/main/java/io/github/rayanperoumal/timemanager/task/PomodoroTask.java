@@ -3,6 +3,7 @@ package io.github.rayanperoumal.timemanager.task;
 import java.util.ArrayList;
 
 import io.github.rayanperoumal.timemanager.task.actions.ExecuteAction;
+import io.github.rayanperoumal.timemanager.task.actions.FinishAction;
 import io.github.rayanperoumal.timemanager.task.actions.PrepareAction;
 
 /**
@@ -13,6 +14,7 @@ public class PomodoroTask extends SimpleTask {
 
 
     private TaskAction prepareAction;
+    private TaskAction finishAction;
 
     public TaskAction getExecuteAction() {
         return executeAction;
@@ -34,10 +36,12 @@ public class PomodoroTask extends SimpleTask {
     public PomodoroTask(){
         prepareAction = new PrepareAction();
         executeAction = new ExecuteAction();
+        finishAction = new FinishAction();
         actions = new ArrayList<TaskAction>(){
             {
                 add(prepareAction);
                 add(executeAction);
+                add(finishAction);
             }
         };
     }

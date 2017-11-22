@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
 
+import io.github.rayanperoumal.timemanager.task.Task;
 import io.github.rayanperoumal.timemanager.task.tasks.PomodoroTask;
 import io.github.rayanperoumal.timemanager.task.TaskAction;
 
@@ -39,8 +40,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void nextAction(){
-        this.currentAction = task.next();
-        actionName.setText(this.currentAction.getTitle());
+        TaskAction action = task.next();
+        if(action!=null){
+            this.currentAction = action;
+            actionName.setText(this.currentAction.getTitle());
+        }
     }
 
     @Override

@@ -54,7 +54,7 @@
             android:padding="16dp"
             android:layout_gravity="right"
             android:background="?attr/selectableItemBackground"
-            android:text="Je suis pret"/>
+            android:text="Terminé"/>
 
         <TextView
             android:layout_width="match_parent"

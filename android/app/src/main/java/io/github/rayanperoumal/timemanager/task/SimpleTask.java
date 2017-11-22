@@ -1,12 +1,14 @@
 package io.github.rayanperoumal.timemanager.task;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.github.rayanperoumal.timemanager.Time;
+import io.github.rayanperoumal.timemanager.Timer;
 import io.github.rayanperoumal.timemanager.task.actions.FinishAction;
-import io.github.rayanperoumal.timemanager.task.actions.PrepareAction;
 
 /**
  * @author Rayan Peroumal
@@ -14,11 +16,17 @@ import io.github.rayanperoumal.timemanager.task.actions.PrepareAction;
 
 public class SimpleTask implements Task, Serializable{
     private int position=-1;
+    protected Timer timer;
     protected List<TaskAction> actions;
 
 
-    public SimpleTask(){
+    public SimpleTask(Timer timer){
+        this.timer = timer;
         actions = new ArrayList<TaskAction>();
+    }
+
+    public void start(){
+        timer.elapse();
     }
 
     public TaskAction getAction() {
@@ -33,10 +41,13 @@ public class SimpleTask implements Task, Serializable{
     @Override
     public TaskAction next() {
         TaskAction action = new FinishAction();
-        Time addMoreTime = new Time(0);
-        if (position>-1 && getAction()!=null) addMoreTime = getAction().getDuration();
+        long t = 0;
+        if (position>-1 && getAction()!=null){
+            t = this.timer.getTime().getTime();
+            Log.i("SimpleTask","t:{"+t+"}");
+        }
         if((actions.size()-1)>position)action = actions.get(++position);
-        action.getDuration().addTime(addMoreTime);
+        timer.setTime(new Time(t+getAction().getDuration().getTime()));
         return action;
     }
 

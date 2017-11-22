@@ -22,12 +22,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         minute = (TextView) findViewById(R.id.minute);
         second = (TextView) findViewById(R.id.second);
         actionNext = (Button)findViewById(R.id.next_action);
         actionName = (TextView)findViewById(R.id.action_name);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        task = new PomodoroTask();
+        timer = new Timer(new Time(500));
+        timer.setOnTimeListener((min, sec) -> {
+            runOnUiThread(()-> updateTime(min, sec));
+        });
+
+        task = new PomodoroTask(timer);
+        task.start();
+
         nextAction();
 
     }
@@ -35,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
     public void nextAction(){
         this.currentAction = task.next();
         actionName.setText(this.currentAction.getTitle());
-        Time time = this.currentAction.getDuration();
-        startElapsing(time.getMinutes(),time.getSeconds());
     }
 
     @Override
@@ -49,17 +55,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-    }
-
-    public void startElapsing(int m, int s){
-        if(timer!=null)timer.stop();
-        timer =  new Timer();
-        timer.setOnTimeListener((min, sec) -> {
-           runOnUiThread(()->{
-                updateTime(sec, min);
-            });
-        });
-        timer.elapse(m,s);
     }
 
     private void updateTime(long m, long s){

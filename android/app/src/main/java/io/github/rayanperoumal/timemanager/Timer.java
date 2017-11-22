@@ -7,24 +7,31 @@ import android.util.Log;
  */
 
 public class Timer{
-    private long startTime=0 , endTime=0, minute, second;
-    TimeListener timeListener = null;
-    ElapsingTask task;
+    private TimeListener timeListener = null;
+    private ElapsingTask task;
 
-    public Timer(){
+    public Time getTime() {
+        return time;
+    }
+
+    private Time time;
+
+    public Timer(Time time){
+        this.time = time;
         task = new ElapsingTask((task)->{
-            if(second>0)second--;
-            else{
-                second=59;
-                minute--;
-            }
-            long time = this.second+60*this.minute;
-            Log.i("SecondElapsedListener","time="+time);
-            timeListener.onTimeChange(second,minute);
-            if(time==0) task.runnable = false;
+            setTime(new Time(this.time.getTime()-1)); // Define new Time
+            if(time.getTime()<=0) task.runnable = false; // Stop Changing time
             return true;
         });
     }
+
+
+    public synchronized void setTime(Time time){
+        this.time = time;
+        Log.i("SecondElapsedListener","time="+time.getTime());
+        timeListener.onTimeChange(time.getMinutes(),time.getSeconds());
+    }
+
 
     public void stop(){
         task.setRunnable(false);
@@ -34,12 +41,8 @@ public class Timer{
         timeListener = listener;
     }
 
-    public void elapse(long m, long s){
-        this.second = s;
-        this.minute = m;
-
+    public void elapse(){
         task.start();
-
     }
 
 

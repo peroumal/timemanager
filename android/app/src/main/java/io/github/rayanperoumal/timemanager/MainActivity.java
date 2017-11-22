@@ -3,10 +3,14 @@ package io.github.rayanperoumal.timemanager;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 import android.widget.TextView;
+
+import io.github.rayanperoumal.timemanager.task.SimpleTask;
 
 public class MainActivity extends AppCompatActivity {
     TextView minute, second;
+    Button action;
     static Timer timer = new Timer();
 
     @Override
@@ -15,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         minute = (TextView) findViewById(R.id.minute);
         second = (TextView) findViewById(R.id.second);
+
         startElapsing(25,0);
     }
 
